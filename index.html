@@ -52,13 +52,25 @@
             text-align: left;
             margin-top: 20px;
         }
-        a {
+
+        /* ESTILIZAÇÃO DOS LINKS COMO BOTÕES */
+        #menu a {
             display: inline-block;
             margin: 10px;
             color: white;
-            text-decoration: none;
-            font-weight: bold;
+            background-color: #4A90E2; /* Cor do fundo */
+            padding: 10px 20px; /* Espaçamento interno */
+            text-decoration: none; /* Remove sublinhado */
+            border-radius: 8px; /* Borda arredondada */
+            font-weight: bold; /* Texto em negrito */
+            transition: background-color 0.3s; /* Transição suave */
         }
+
+        #menu a:hover {
+            background-color: #357ABD; /* Cor ao passar o mouse */
+            cursor: pointer;
+        }
+
         #rodape {
             margin-top: 30px;
             color: #fff;
@@ -111,7 +123,7 @@
         function adicionarRegistro(registro) {
             registros.push(registro);
             localStorage.setItem('registros', JSON.stringify(registros));
-                 document.getElementById('mensagem').textContent = '';
+            document.getElementById('mensagem').textContent = '';
         }
 
         function removerRegistro(registro) {
