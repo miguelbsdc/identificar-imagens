@@ -49,7 +49,7 @@
             text-align: center;
         }
         input, button {
-            width: 100%;
+            width: calc(100% - 20px);
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
@@ -83,6 +83,28 @@
             cursor: pointer;
             text-decoration: underline;
         }
+        #cookies {
+            background-color: #333333;
+            color: #FFFFFF;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #cookies button {
+            margin-left: 10px;
+            background-color: #008000;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #cookies button:hover {
+            background-color: #B38B6D;
+        }
     </style>
 </head>
 <body>
@@ -93,6 +115,11 @@
         <a href="#" onclick="mostrarAba('termos')">Termos de Uso</a>
         <a href="#" onclick="mostrarAba('privacidade')">Política de Privacidade</a>
         <a href="#" onclick="mostrarAba('sobre')">Sobre Nós</a>
+    </div>
+
+    <!-- Aviso de Cookies -->
+    <div id="cookies">
+        Este site utiliza cookies para melhorar sua experiência. <button onclick="aceitarCookies()">Aceitar</button>
     </div>
 
     <!-- Aba de Pesquisa -->
@@ -119,7 +146,6 @@
     <div id="termos" class="container hidden">
         <h2>Termos de Uso</h2>
         <p>Bem-vindo ao site da Brasil Aviation! Ao utilizar nosso serviço, você concorda com os seguintes termos:
-
 Uso Adequado: Este site deve ser utilizado apenas para fins pessoais e informativos relacionados à aviação. É proibido o uso para atividades ilícitas ou que possam prejudicar outros usuários.
 Responsabilidade: Não garantimos a precisão das informações fornecidas pelos usuários. Registros e dados adicionados são de responsabilidade de quem os insere.
 Propriedade Intelectual: Todo o conteúdo disponível no site é protegido por direitos autorais. A reprodução, cópia ou redistribuição é proibida sem permissão prévia.
@@ -131,7 +157,6 @@ Alterações nos Termos: Podemos alterar os termos a qualquer momento. Recomenda
         <h2>Política de Privacidade</h2>
         <p>Política de Privacidade da Brasil Aviation
 Sua privacidade é importante para nós. Esta política descreve como coletamos, usamos e protegemos suas informações:
-
 Coleta de Dados: Coletamos apenas as informações fornecidas diretamente por você, como registros de aeronaves, para melhorar a experiência no site.
 Uso de Dados: Utilizamos os dados fornecidos para exibição na lista de registros e aprimoramento do serviço. Não compartilhamos suas informações com terceiros.
 Cookies: Este site utiliza cookies para armazenar dados localmente em seu dispositivo, como seus registros salvos.
@@ -149,6 +174,7 @@ A Brasil Aviation nasceu da paixão pela aviação e do desejo de criar uma comu
     <!-- Rodapé -->
     <div id="rodape">
         <p>Todos os direitos reservados à BRASIL AVIATION</p>
+        <p>Siga-nos no Instagram: <a href="https://instagram.com/brasil_aviation_/" target="_blank">@brasil_aviation_</a></p>
     </div>
 
     <script>
@@ -163,6 +189,11 @@ A Brasil Aviation nasceu da paixão pela aviação e do desejo de criar uma comu
             if (aba === 'lista') {
                 mostrarLista();
             }
+        }
+
+        // Função para ocultar aviso de cookies
+        function aceitarCookies() {
+            document.getElementById('cookies').style.display = 'none';
         }
 
         // Restante do código de busca, adição e remoção de registros...
