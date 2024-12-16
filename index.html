@@ -74,13 +74,40 @@
             width: 100%;
             color: #B38B6D;
         }
-        .hidden {
-            display: none;
-        }
-        .link {
-            margin-top: 10px;
+        #cookies {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #1A202C;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             color: #FFFFFF;
+        }
+        #cookies button {
+            background-color: #008000;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
             cursor: pointer;
+            color: white;
+        }
+        #cookies button:hover {
+            background-color: #B38B6D;
+        }
+        .instagram {
+            margin-top: 10px;
+        }
+        .instagram a {
+            color: #B38B6D;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .instagram a:hover {
             text-decoration: underline;
         }
     </style>
@@ -109,33 +136,18 @@
         </div>
     </div>
 
-    <!-- Aba de Lista -->
-    <div id="lista" class="container hidden">
-        <h2>Registros Salvos</h2>
-        <ul id="listaRegistros"></ul>
-    </div>
-
-    <!-- Termos de Uso -->
-    <div id="termos" class="container hidden">
-        <h2>Termos de Uso</h2>
-        <p>Estes são os termos de uso da aplicação...</p>
-    </div>
-
-    <!-- Política de Privacidade -->
-    <div id="privacidade" class="container hidden">
-        <h2>Política de Privacidade</h2>
-        <p>Esta é a política de privacidade. Coletamos e armazenamos dados para...</p>
-    </div>
-
-    <!-- Sobre Nós -->
-    <div id="sobre" class="container hidden">
-        <h2>Sobre Nós</h2>
-        <p>A BRASIL AVIATION é uma plataforma dedicada aos amantes da aviação...</p>
-    </div>
-
     <!-- Rodapé -->
     <div id="rodape">
         <p>Todos os direitos reservados à BRASIL AVIATION</p>
+        <div class="instagram">
+            <p>Siga-nos no Instagram: <a href="https://instagram.com/brasil_aviation_" target="_blank">@brasil_aviation_</a></p>
+        </div>
+    </div>
+
+    <!-- Banner de Cookies -->
+    <div id="cookies">
+        <span>Este site utiliza cookies para melhorar sua experiência. Ao continuar, você concorda com nossa <a href="#" onclick="mostrarAba('privacidade')" style="color:#B38B6D;">Política de Privacidade</a>.</span>
+        <button onclick="aceitarCookies()">Aceitar</button>
     </div>
 
     <script>
@@ -150,6 +162,11 @@
             if (aba === 'lista') {
                 mostrarLista();
             }
+        }
+
+        // Função para aceitar cookies
+        function aceitarCookies() {
+            document.getElementById('cookies').style.display = 'none';
         }
 
         // Restante do código de busca, adição e remoção de registros...
