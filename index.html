@@ -7,44 +7,49 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #464847;
-            color: #fff;
-            text-align: center;
+            background-color: #2D3748;
+            color: #FFFFFF;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1, h2 {
             color: #FFFFFF;
+            margin-bottom: 20px;
         }
         #menu {
-            background-color: #2D3748;
-            padding: 10px;
-            border-radius: 10px;
+            width: 100%;
+            background-color: #1A202C;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         a {
-            display: inline-block;
-            margin: 10px;
+            margin: 0 10px;
             padding: 10px 20px;
             background-color: #008000;
             color: white;
             text-decoration: none;
-            border-radius: 10px;
+            border-radius: 5px;
         }
         a:hover {
-            background-color: #B38b6d;
+            background-color: #B38B6D;
         }
-        #container {
-            display: none;
-            background: #2D3748;
+        .container {
+            background: #1A202C;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 300px;
-            margin: 20px auto;
+            margin: 20px 0;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
         }
         input, button {
-            width: 90%;
+            width: 100%;
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
@@ -60,13 +65,18 @@
             cursor: pointer;
         }
         button:hover {
-            background-color: #B38b6d;
+            background-color: #B38B6D;
         }
         .error {
             color: red;
         }
         .success {
             color: green;
+        }
+        #listaRegistros {
+            margin: 0;
+            padding: 0;
+            list-style: none;
         }
         #listaRegistros li {
             margin: 5px 0;
@@ -80,11 +90,21 @@
         }
         #listaRegistros button {
             background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
             cursor: pointer;
+        }
+        #listaRegistros button:hover {
+            background-color: #b02a37;
         }
         #rodape {
             margin-top: 30px;
             font-size: 14px;
+            text-align: center;
+            width: 100%;
+            color: #B38B6D;
         }
     </style>
 </head>
@@ -96,7 +116,7 @@
     </div>
 
     <!-- Aba de Pesquisa -->
-    <div id="pesquisa" class="container" style="display: block;">
+    <div id="pesquisa" class="container">
         <h1>Buscar Registro de Aeronave</h1>
         <input type="text" id="inputRegistro" placeholder="Digite o registro">
         <button onclick="buscarRegistro()">Buscar</button>
