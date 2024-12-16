@@ -42,12 +42,6 @@
         button:hover {
             background-color: #0056b3;
         }
-        .error {
-            color: red;
-        }
-        .success {
-            color: green;
-        }
         #registros {
             text-align: left;
             margin-top: 20px;
@@ -73,10 +67,9 @@
     </div>
 
     <div id="container">
-        <h1>Minha Coleção Aérea</h1>
-        <input type="text" id="inputRegistro" placeholder="Digite o registro ex (PR-ABH)">
+        <h1>Minha coleção Aérea</h1>
+        <input type="text" id="inputRegistro" placeholder="Digite o registro (ex: PR-ABC)">
         <button onclick="buscarRegistro()">Buscar</button>
-        <p id="mensagem" class="error"></p>
 
         <div id="registros" style="display: none;">
             <h2>Registros Salvos</h2>
@@ -85,7 +78,7 @@
     </div>
 
     <div id="rodape">
-        <p>©Todos os direitos reservados a BRASIL AVIATION</p>
+        <p>Todos os direitos reservados à BRASIL AVIATION</p>
     </div>
 
     <script>
@@ -93,18 +86,18 @@
 
         function buscarRegistro() {
             const input = document.getElementById('inputRegistro').value.toUpperCase();
-            const mensagem = document.getElementById('mensagem');
-            
+
             if (!input) {
-                mensagem.textContent = 'Por favor, digite um registro.';
-                return;
+                return; // Não faz nada se o campo estiver vazio
             }
 
             const encontrado = registros.includes(input);
-            if (encontrado) {
-                mensagem.innerHTML = `<span class='success'>Registro encontrado: ${input}</span>`;
-            } else {
-                mensagem.innerHTML = `Não encontramos fotos para a aeronave ${input}. <br> <button onclick='adicionarRegistro("${input}")'>Adicionar Registro</button>`;
+            if (!encontrado) {
+                // Se o registro não for encontrado, pergunta se o usuário quer adicionar
+                const confirmar = confirm(`Não encontramos fotos para a aeronave ${input}. Deseja adicionar este registro?`);
+                if (confirmar) {
+                    adicionarRegistro(input);
+                }
             }
         }
 
@@ -112,7 +105,6 @@
             registros.push(registro);
             localStorage.setItem('registros', JSON.stringify(registros));
             alert(`Registro ${registro} adicionado com sucesso!`);
-            document.getElementById('mensagem').textContent = '';
         }
 
         function removerRegistro(registro) {
@@ -148,7 +140,6 @@
         // Alternar entre abas
         document.getElementById('btnBuscar').addEventListener('click', () => {
             document.getElementById('registros').style.display = 'none';
-            document.getElementById('mensagem').textContent = '';
         });
 
         document.getElementById('btnLista').addEventListener('click', () => {
