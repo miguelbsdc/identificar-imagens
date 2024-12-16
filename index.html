@@ -96,9 +96,18 @@
     <div id="container" style="display: block;" data-aba="pesquisa">
         <h1>Buscar Registro de Aeronave</h1>
         <input type="text" id="inputRegistro" placeholder="Digite o registro">
-        <input type="text" id="inputCompanhia" placeholder="Digite a companhia aérea">
         <button onclick="buscarRegistro()">Buscar</button>
         <p id="mensagem" class="error"></p>
+    </div>
+
+    <!-- Aba de Adicionar Registro -->
+    <div id="container" data-aba="adicionar" style="display: none;">
+        <h2>Adicionar Registro</h2>
+        <input type="text" id="inputNovoRegistro" placeholder="Digite o registro">
+        <input type="text" id="inputNovaCompanhia" placeholder="Digite a companhia aérea">
+        <input type="text" id="inputModeloAeronave" placeholder="Digite o modelo da aeronave">
+        <button onclick="adicionarRegistro()">Adicionar</button>
+        <p id="mensagemAdicionar" class="error"></p>
     </div>
 
     <!-- Aba de Lista -->
@@ -121,38 +130,47 @@
                 div.style.display = div.getAttribute('data-aba') === aba ? 'block' : 'none';
             });
             if (aba === 'lista') {
-                mostrarLista();
+                mostrarLista(); // Atualiza a lista ao mostrar a aba
             }
         }
 
         // Função para buscar registro
         function buscarRegistro() {
             const input = document.getElementById('inputRegistro').value.toUpperCase();
-            const companhia = document.getElementById('inputCompanhia').value;
             const mensagem = document.getElementById('mensagem');
 
-            if (!input || !companhia) {
-                mensagem.textContent = 'Por favor, digite o registro e a companhia aérea.';
+            if (!input) {
+                mensagem.textContent = 'Por favor, digite o registro.';
                 return;
             }
 
             const registro = registros.find(r => r.registro === input);
 
             if (registro) {
-                mensagem.innerHTML = `<span class='success'>Registro encontrado: ${registro.registro} (${registro.companhia})</span>`;
+                mensagem.innerHTML = `<span class='success'>Registro encontrado: ${registro.registro} - ${registro.modelo} - ${registro.companhia}</span>`;
             } else {
-                mensagem.innerHTML = `
-                    Não encontramos o registro ${input}. <br> 
-                    <button onclick='adicionarRegistro("${input}", "${companhia}")'>Adicionar Registro</button>
-                `;
+                mensagem.innerHTML = `Não encontramos o registro ${input}. <br> 
+                    <button onclick='mostrarAba("adicionar")'>Adicionar Registro</button>`;
             }
         }
 
         // Função para adicionar registro
-        function adicionarRegistro(registro, companhia) {
-            registros.push({ registro, companhia });
+        function adicionarRegistro() {
+            const novoRegistro = document.getElementById('inputNovoRegistro').value.toUpperCase();
+            const novaCompanhia = document.getElementById('inputNovaCompanhia').value;
+            const modeloAeronave = document.getElementById('inputModeloAeronave').value;
+            const mensagem = document.getElementById('mensagemAdicionar');
+
+            if (!novoRegistro || !novaCompanhia || !modeloAeronave) {
+                mensagem.textContent = 'Por favor, preencha todos os campos.';
+                return;
+            }
+
+            registros.push({ registro: novoRegistro, companhia: novaCompanhia, modelo: modeloAeronave });
             localStorage.setItem('registros', JSON.stringify(registros));
-            document.getElementById('mensagem').textContent = 'Registro adicionado com sucesso!';
+
+            document.getElementById('mensagemAdicionar').textContent = 'Registro adicionado com sucesso!';
+            mostrarAba('lista'); // Volta para a lista de registros após adicionar
         }
 
         // Função para mostrar lista ordenada
@@ -160,21 +178,25 @@
             const lista = document.getElementById('listaRegistros');
             lista.innerHTML = '';
 
-            registros
-                .sort((a, b) => a.registro.localeCompare(b.registro)) // Ordena os registros
-                .forEach(({ registro, companhia }) => {
-                    const li = document.createElement('li');
-                    li.textContent = `${registro} - ${companhia}`;
-                    
-                    // Botão de remover
-                    const removerBtn = document.createElement('button');
-                    removerBtn.textContent = 'Remover';
-                    removerBtn.style.marginLeft = '10px';
-                    removerBtn.onclick = () => removerRegistro(registro);
+            if (registros.length === 0) {
+                lista.innerHTML = '<li class="error">Nenhum registro salvo!</li>';
+            } else {
+                registros
+                    .sort((a, b) => a.registro.localeCompare(b.registro)) // Ordena os registros
+                    .forEach(({ registro, companhia, modelo }) => {
+                        const li = document.createElement('li');
+                        li.textContent = `${registro} - ${modelo} - ${companhia}`;
+                        
+                        // Botão de remover
+                        const removerBtn = document.createElement('button');
+                        removerBtn.textContent = 'Remover';
+                        removerBtn.style.marginLeft = '10px';
+                        removerBtn.onclick = () => removerRegistro(registro);
 
-                    li.appendChild(removerBtn);
-                    lista.appendChild(li);
-                });
+                        li.appendChild(removerBtn);
+                        lista.appendChild(li);
+                    });
+            }
         }
 
         // Função para remover registro
@@ -183,7 +205,7 @@
             if (index > -1) {
                 registros.splice(index, 1);
                 localStorage.setItem('registros', JSON.stringify(registros));
-                mostrarLista();
+                mostrarLista(); // Atualiza a lista após a remoção
             }
         }
 
