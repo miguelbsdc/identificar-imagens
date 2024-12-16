@@ -1,182 +1,75 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Registro de Aeronave</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-        .container {
-            text-align: center;
-            margin: 50px auto;
-            max-width: 400px;
-            padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        input {
-            width: 80%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .error-message {
-            color: red;
-            margin: 15px 0;
-        }
-        .success-message {
-            color: green;
-            margin: 15px 0;
-        }
-        .link {
-            color: blue;
-            text-decoration: none;
-        }
-        #tab-container {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-        }
-        #tab-container div {
-            cursor: pointer;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-        }
-        #tab-container div:hover {
-            background-color: #0056b3;
-        }
-        .hidden {
-            display: none;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        ul li {
-            padding: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .remove-button {
-            background-color: red;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 3px;
-            color: white;
-            cursor: pointer;
-        }
-        .remove-button:hover {
-            background-color: darkred;
-        }
-    </style>
-</head>
-<body>
-    <div id="tab-container">
-        <div onclick="showTab('search')">Buscar Registro</div>
-        <div onclick="showTab('list')">Lista de Registros</div>
-    </div>
-
-    <div class="container" id="search">
-        <h1>Buscar Registro de Aeronave</h1>
-        <input type="text" id="registro" placeholder="Digite o registro">
-        <button onclick="buscarRegistro()">Buscar</button>
-        <p id="resultado" class="error-message"></p>
-        <button id="addButton" onclick="adicionarRegistro()" class="hidden">Adicionar Registro</button>
-    </div>
-
-    <div class="container hidden" id="list">
-        <h1>Registros Adicionados</h1>
-        <ul id="registroLista">
-            <!-- Lista de registros vai aqui -->
-        </ul>
-    </div>
-
+    <title>Website with Login and Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
     <script>
-        const registros = [];
-
-        function showTab(tabName) {
-            document.getElementById('search').classList.add('hidden');
-            document.getElementById('list').classList.add('hidden');
-            document.getElementById(tabName).classList.remove('hidden');
-        }
-
-        function buscarRegistro() {
-            const inputRegistro = document.getElementById('registro').value.trim().toUpperCase();
-            const resultado = document.getElementById('resultado');
+        document.addEventListener('DOMContentLoaded', () => {
+            const recordList = document.getElementById('recordList');
+            const recordInput = document.getElementById('recordInput');
             const addButton = document.getElementById('addButton');
 
-            if (inputRegistro === '') {
-                resultado.textContent = 'Por favor, digite um registro.';
-                addButton.classList.add('hidden');
-                return;
+            // Load saved records from localStorage
+            const savedRecords = JSON.parse(localStorage.getItem('records')) || [];
+
+            function renderRecords() {
+                recordList.innerHTML = '';
+                savedRecords.sort().forEach(record => {
+                    const li = document.createElement('li');
+                    li.textContent = record;
+                    recordList.appendChild(li);
+                });
             }
 
-            if (registros.includes(inputRegistro)) {
-                resultado.textContent = `Registro ${inputRegistro} encontrado!`;
-                resultado.className = 'success-message';
-                addButton.classList.add('hidden');
-            } else {
-                resultado.textContent = `Não encontramos fotos para o registro ${inputRegistro}.`;
-                resultado.className = 'error-message';
-                addButton.classList.remove('hidden');
+            function saveRecords() {
+                localStorage.setItem('records', JSON.stringify(savedRecords));
             }
-        }
 
-        function adicionarRegistro() {
-            const inputRegistro = document.getElementById('registro').value.trim().toUpperCase();
-            if (inputRegistro && !registros.includes(inputRegistro)) {
-                registros.push(inputRegistro);
-                atualizarLista();
-                document.getElementById('resultado').textContent = `Registro ${inputRegistro} adicionado!`;
-                document.getElementById('resultado').className = 'success-message';
-                document.getElementById('addButton').classList.add('hidden');
-            }
-        }
-
-        function removerRegistro(index) {
-            registros.splice(index, 1);
-            atualizarLista();
-        }
-
-        function atualizarLista() {
-            const lista = document.getElementById('registroLista');
-            lista.innerHTML = '';
-            registros.forEach((registro, index) => {
-                const li = document.createElement('li');
-                li.textContent = registro;
-                const removeButton = document.createElement('button');
-                removeButton.textContent = 'Remover';
-                removeButton.classList.add('remove-button');
-                removeButton.onclick = () => removerRegistro(index);
-                li.appendChild(removeButton);
-                lista.appendChild(li);
+            addButton.addEventListener('click', () => {
+                const newRecord = recordInput.value.trim();
+                if (newRecord && !savedRecords.includes(newRecord)) {
+                    savedRecords.push(newRecord);
+                    saveRecords();
+                    renderRecords();
+                    recordInput.value = '';
+                }
             });
-        }
+
+            renderRecords();
+        });
     </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+                <li><a href="admin.html">Admin Panel</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="welcome">
+            <h1>Welcome to the Website</h1>
+            <p>Your one-stop platform for amazing content!</p>
+
+            <div id="recordManager">
+                <input type="text" id="recordInput" placeholder="Enter a record">
+                <button id="addButton">Add Record</button>
+                <ul id="recordList"></ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Website. All rights reserved.</p>
+    </footer>
 </body>
 </html>
