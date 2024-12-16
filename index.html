@@ -171,16 +171,23 @@
             }
 
             registros.push({ registro, companhia, modelo });
+            ordenarRegistros(); // Ordena antes de salvar
             localStorage.setItem('registros', JSON.stringify(registros));
             mostrarLista();
             document.getElementById('mensagem').innerHTML = 'Registro adicionado com sucesso!';
             document.getElementById('adicionarRegistro').style.display = 'none';
         }
 
+        // Função para ordenar registros
+        function ordenarRegistros() {
+            registros.sort((a, b) => a.registro.localeCompare(b.registro));
+        }
+
         // Função para mostrar a lista de registros
         function mostrarLista() {
+            ordenarRegistros(); // Garante que esteja ordenado
             const lista = document.getElementById('listaRegistros');
-            lista.innerHTML = '';  // Limpa a lista
+            lista.innerHTML = ''; // Limpa a lista
 
             registros.forEach(({ registro, companhia, modelo }) => {
                 const li = document.createElement('li');
