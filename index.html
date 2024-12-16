@@ -74,40 +74,13 @@
             width: 100%;
             color: #B38B6D;
         }
-        #cookies {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #1A202C;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #FFFFFF;
+        .hidden {
+            display: none;
         }
-        #cookies button {
-            background-color: #008000;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            color: white;
-        }
-        #cookies button:hover {
-            background-color: #B38B6D;
-        }
-        .instagram {
+        .link {
             margin-top: 10px;
-        }
-        .instagram a {
-            color: #B38B6D;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .instagram a:hover {
+            color: #FFFFFF;
+            cursor: pointer;
             text-decoration: underline;
         }
     </style>
@@ -136,18 +109,46 @@
         </div>
     </div>
 
+    <!-- Aba de Lista -->
+    <div id="lista" class="container hidden">
+        <h2>Registros Salvos</h2>
+        <ul id="listaRegistros"></ul>
+    </div>
+
+    <!-- Termos de Uso -->
+    <div id="termos" class="container hidden">
+        <h2>Termos de Uso</h2>
+        <p>Bem-vindo ao site da Brasil Aviation! Ao utilizar nosso serviço, você concorda com os seguintes termos:
+
+Uso Adequado: Este site deve ser utilizado apenas para fins pessoais e informativos relacionados à aviação. É proibido o uso para atividades ilícitas ou que possam prejudicar outros usuários.
+Responsabilidade: Não garantimos a precisão das informações fornecidas pelos usuários. Registros e dados adicionados são de responsabilidade de quem os insere.
+Propriedade Intelectual: Todo o conteúdo disponível no site é protegido por direitos autorais. A reprodução, cópia ou redistribuição é proibida sem permissão prévia.
+Alterações nos Termos: Podemos alterar os termos a qualquer momento. Recomendamos que revise regularmente esta página para se manter informado.</p>
+    </div>
+
+    <!-- Política de Privacidade -->
+    <div id="privacidade" class="container hidden">
+        <h2>Política de Privacidade</h2>
+        <p>Política de Privacidade da Brasil Aviation
+Sua privacidade é importante para nós. Esta política descreve como coletamos, usamos e protegemos suas informações:
+
+Coleta de Dados: Coletamos apenas as informações fornecidas diretamente por você, como registros de aeronaves, para melhorar a experiência no site.
+Uso de Dados: Utilizamos os dados fornecidos para exibição na lista de registros e aprimoramento do serviço. Não compartilhamos suas informações com terceiros.
+Cookies: Este site utiliza cookies para armazenar dados localmente em seu dispositivo, como seus registros salvos.
+Segurança: Adotamos medidas de segurança para proteger seus dados. Contudo, nenhum sistema é 100% seguro, e não podemos garantir a inviolabilidade das informações.</p>
+    </div>
+
+    <!-- Sobre Nós -->
+    <div id="sobre" class="container hidden">
+        <h2>Sobre Nós</h2>
+        <p>Sobre a Brasil Aviation
+Somos uma plataforma dedicada a entusiastas da aviação. Nosso objetivo é proporcionar um ambiente simples e eficiente para a consulta e registro de aeronaves. Valorizamos a paixão por voar e buscamos conectar pessoas interessadas na indústria aérea, seja para hobby, estudo ou curiosidade.
+A Brasil Aviation nasceu da paixão pela aviação e do desejo de criar uma comunidade ativa, onde cada registro é uma pequena parte da história do céu brasileiro.</p>
+    </div>
+
     <!-- Rodapé -->
     <div id="rodape">
         <p>Todos os direitos reservados à BRASIL AVIATION</p>
-        <div class="instagram">
-            <p>Siga-nos no Instagram: <a href="https://instagram.com/brasil_aviation_" target="_blank">@brasil_aviation_</a></p>
-        </div>
-    </div>
-
-    <!-- Banner de Cookies -->
-    <div id="cookies">
-        <span>Este site utiliza cookies para melhorar sua experiência. Ao continuar, você concorda com nossa <a href="#" onclick="mostrarAba('privacidade')" style="color:#B38B6D;">Política de Privacidade</a>.</span>
-        <button onclick="aceitarCookies()">Aceitar</button>
     </div>
 
     <script>
@@ -162,11 +163,6 @@
             if (aba === 'lista') {
                 mostrarLista();
             }
-        }
-
-        // Função para aceitar cookies
-        function aceitarCookies() {
-            document.getElementById('cookies').style.display = 'none';
         }
 
         // Restante do código de busca, adição e remoção de registros...
