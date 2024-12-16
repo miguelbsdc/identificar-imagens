@@ -73,8 +73,8 @@
     </div>
 
     <div id="container">
-        <h1>Buscar Registro de Aeronave</h1>
-        <input type="text" id="inputRegistro" placeholder="Digite o registro">
+        <h1>Minha Coleção Aérea</h1>
+        <input type="text" id="inputRegistro" placeholder="Digite o registro ex (PR-ABH)">
         <button onclick="buscarRegistro()">Buscar</button>
         <p id="mensagem" class="error"></p>
 
@@ -85,7 +85,7 @@
     </div>
 
     <div id="rodape">
-        <p>© Todos os direitos reservados a BRASIL AVIATION</p>
+        <p>Todos os direitos reservados à BRASIL AVIATION</p>
     </div>
 
     <script>
@@ -115,12 +115,32 @@
             document.getElementById('mensagem').textContent = '';
         }
 
+        function removerRegistro(registro) {
+            const index = registros.indexOf(registro);
+            if (index > -1) {
+                registros.splice(index, 1);
+                localStorage.setItem('registros', JSON.stringify(registros));
+                mostrarLista(); // Atualiza a lista após remoção
+            }
+        }
+
         function mostrarLista() {
             const lista = document.getElementById('listaRegistros');
             lista.innerHTML = '';
             registros.forEach(registro => {
                 const li = document.createElement('li');
                 li.textContent = registro;
+
+                // Adicionando botão de remoção
+                const removerBtn = document.createElement('button');
+                removerBtn.textContent = 'Remover';
+                removerBtn.style.marginLeft = '10px';
+                removerBtn.style.backgroundColor = '#dc3545';
+                removerBtn.style.borderColor = '#dc3545';
+                removerBtn.style.cursor = 'pointer';
+                removerBtn.onclick = () => removerRegistro(registro);
+
+                li.appendChild(removerBtn);
                 lista.appendChild(li);
             });
         }
